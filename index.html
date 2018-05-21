@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -17,24 +17,82 @@
 			}
 			/* Optional: Makes the sample page fill the window. */
 			html, body {
-			  height: 100%;
+			  height: 400px;
+				width: 100%;
 			  margin: 0;
 			  padding: 0;
 			}
 		  </style>
 		</head>
+
 		<body>
-		  <div id="map"></div>
+				<form>
+						<label>Business Type:
+							<input type="text" name="term" id="term" placeholder="type" value="cats" />
+						</label>
+						<label>Business Location:
+							<input type="text" name="location" id="location" placeholder="location" value="Atlanta, GA" />
+						</label>
+
+						<br/>
+
+						<label>Price Level:
+							<label>
+								<input type="checkbox" name="price" value="1" />
+							</label> $
+							<label>
+								<input type="checkbox" name="price" value="2"; />
+							</label> $$
+							<label>
+								<input type="checkbox" name="price" value="3"; />
+							</label> $$$
+							<label>
+									<input type="checkbox" name="price" value="4"; />
+							</label> $$$$
+						</label>
+
+						<br/>=
+						<a href="#" id="search">Search</a>
+				</form>
+			
+				<hr/>
+				<ul id="results"></ul>
+
+			<div id="map"></div>
+			
 		  <script>
-			var map;
-			function initMap() {
-			  map = new google.maps.Map(document.getElementById('map'), {
-				center: {lat: -34.397, lng: 150.644},
-				zoom: 8
-			  });
-			}
+
+				var map;
+			  function initMap() {
+        	var atlanta = {lat: 33.7490, lng: -84.3880};
+        	map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 9,
+						center: atlanta,
+						mapTypeId: 'terrain'
+					});
+        	var marker = new google.maps.Marker({
+						position: atlanta,
+						map: map
+					});
+				}
+				
+				function createMarkers (results) {
+					console.log("createMarkers", results, map)
+        	for (var i = 0; i < results.length; i++) {
+						var coords = results[i];
+						console.log(coords)
+         		var latLng = new google.maps.LatLng(coords.lat,coords.lng);
+          	var marker = new google.maps.Marker({
+            	position: latLng,
+            	map: map
+          });
+        }
+      }
+  
 		  </script>
-		  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXOIaLW2i1RvsaTG97ewCaH8ufdY_T7DI&callback=initMap"
-		  async defer></script>
+		  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmYLb9hg543lBQyALzTU-pZnR9U5Um36g&callback=initMap"
+			></script>
+			<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			<script src="dist/js/yelpModule.js"></script>
 		</body>
-	  </html>
+</html>
